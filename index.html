@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Portfolio - 2024 트렌드</title>
+    <title>TrendMall - 2024 최신 트렌드 쇼핑몰</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ecommerce-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -15,16 +16,35 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Portfolio</span>
+                <span class="logo-text">TrendMall</span>
                 <div class="logo-dot"></div>
             </div>
+            <div class="search-container">
+                <input type="text" placeholder="상품을 검색해보세요..." class="search-input">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#home" class="nav-link">홈</a></li>
+                <li><a href="#categories" class="nav-link">카테고리</a></li>
+                <li><a href="#products" class="nav-link">신상품</a></li>
+                <li><a href="#sale" class="nav-link">세일</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="nav-icon" id="wishlistBtn">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </button>
+                <button class="nav-icon" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </button>
+                <button class="nav-icon" id="userBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button class="dark-mode-toggle" id="darkModeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -35,42 +55,42 @@
 
     <!-- 히어로 섹션 -->
     <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        안녕하세요! 👋<br>
-                        저는 <span class="gradient-text">크리에이티브 개발자</span>입니다
-                    </h1>
-                    <p class="hero-description">
-                        혁신적인 웹 경험을 만들어내는 풀스택 개발자입니다. 
-                        사용자 중심의 디자인과 최신 기술을 결합하여 
-                        의미있는 디지털 솔루션을 제공합니다.
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('projects')">
-                            <i class="fas fa-rocket"></i>
-                            프로젝트 보기
-                        </button>
-                        <button class="btn btn-secondary" onclick="scrollToSection('contact')">
-                            <i class="fas fa-envelope"></i>
-                            연락하기
-                        </button>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="floating-card card-1">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <div class="floating-card card-2">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <div class="floating-card card-3">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <div class="hero-avatar">
-                        <div class="avatar-circle">
-                            <i class="fas fa-code"></i>
+        <div class="hero-slider">
+            <div class="slide active">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <div class="hero-text">
+                            <h1 class="hero-title">
+                                2024 <span class="gradient-text">최신 트렌드</span><br>
+                                지금 만나보세요 ✨
+                            </h1>
+                            <p class="hero-description">
+                                전 세계에서 엄선한 프리미엄 상품들을 특별한 가격으로 만나보세요.
+                                트렌디한 패션부터 혁신적인 테크 제품까지!
+                            </p>
+                            <div class="hero-buttons">
+                                <button class="btn btn-primary" onclick="scrollToSection('products')">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    쇼핑하기
+                                </button>
+                                <button class="btn btn-secondary" onclick="scrollToSection('categories')">
+                                    <i class="fas fa-tags"></i>
+                                    카테고리 보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-product-showcase">
+                                <div class="showcase-item item-1">
+                                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop" alt="제품1">
+                                </div>
+                                <div class="showcase-item item-2">
+                                    <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=200&h=200&fit=crop" alt="제품2">
+                                </div>
+                                <div class="showcase-item item-3">
+                                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="제품3">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,59 +101,105 @@
         </div>
     </section>
 
-    <!-- About 섹션 -->
-    <section id="about" class="about">
+    <!-- 카테고리 섹션 -->
+    <section id="categories" class="categories">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">열정적인 개발자의 이야기</p>
+                <h2 class="section-title">인기 카테고리</h2>
+                <p class="section-subtitle">다양한 상품을 카테고리별로 만나보세요</p>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>🚀 혁신을 추구하는 개발자</h3>
-                    <p>
-                        5년간의 개발 경험을 바탕으로 사용자 경험을 최우선으로 하는 
-                        웹 애플리케이션을 개발하고 있습니다. 새로운 기술을 배우는 것을 
-                        좋아하며, 팀과의 협업을 통해 더 나은 결과물을 만들어내는 것에 
-                        보람을 느낍니다.
-                    </p>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <span class="stat-number">50+</span>
-                            <span class="stat-label">완성된 프로젝트</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">5+</span>
-                            <span class="stat-label">년 경험</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">고객 만족도</span>
-                        </div>
+            <div class="categories-grid">
+                <div class="category-card" data-category="fashion">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>패션</h3>
+                    <p>최신 트렌드 의류</p>
+                    <div class="category-overlay">
+                        <span>1,234개 상품</span>
                     </div>
                 </div>
-                <div class="about-visual">
-                    <div class="experience-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2024 - 현재</h4>
-                                <p>시니어 풀스택 개발자</p>
-                            </div>
+                <div class="category-card" data-category="electronics">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>전자제품</h3>
+                    <p>혁신적인 테크 제품</p>
+                    <div class="category-overlay">
+                        <span>856개 상품</span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="beauty">
+                    <div class="category-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>뷰티</h3>
+                    <p>프리미엄 화장품</p>
+                    <div class="category-overlay">
+                        <span>642개 상품</span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="home">
+                    <div class="category-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>홈&리빙</h3>
+                    <p>스타일리시한 인테리어</p>
+                    <div class="category-overlay">
+                        <span>923개 상품</span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="sports">
+                    <div class="category-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>스포츠</h3>
+                    <p>운동 & 아웃도어</p>
+                    <div class="category-overlay">
+                        <span>567개 상품</span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="books">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>도서</h3>
+                    <p>지식과 교양</p>
+                    <div class="category-overlay">
+                        <span>1,089개 상품</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 특가 상품 섹션 -->
+    <section id="sale" class="sale-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🔥 특가 세일</h2>
+                <p class="section-subtitle">놓치면 후회하는 한정 특가!</p>
+            </div>
+            <div class="sale-banner">
+                <div class="sale-content">
+                    <h3>블랙 프라이데이 특가</h3>
+                    <p>전 상품 최대 70% 할인</p>
+                    <div class="countdown" id="countdown">
+                        <div class="time-unit">
+                            <span class="time-value" id="days">00</span>
+                            <span class="time-label">일</span>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2022 - 2024</h4>
-                                <p>프론트엔드 개발자</p>
-                            </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="hours">00</span>
+                            <span class="time-label">시간</span>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>2020 - 2022</h4>
-                                <p>주니어 개발자</p>
-                            </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="minutes">00</span>
+                            <span class="time-label">분</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="seconds">00</span>
+                            <span class="time-label">초</span>
                         </div>
                     </div>
                 </div>
@@ -141,252 +207,232 @@
         </div>
     </section>
 
-    <!-- Skills 섹션 -->
-    <section id="skills" class="skills">
+    <!-- 신상품 섹션 -->
+    <section id="products" class="products">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Skills & Technologies</h2>
-                <p class="section-subtitle">전문 기술 스택</p>
+                <h2 class="section-title">신상품</h2>
+                <p class="section-subtitle">방금 출시된 따끈따끈한 신제품들</p>
             </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-react"></i>
-                            <span>React</span>
+            <div class="product-filters">
+                <button class="filter-btn active" data-filter="all">전체</button>
+                <button class="filter-btn" data-filter="fashion">패션</button>
+                <button class="filter-btn" data-filter="electronics">전자제품</button>
+                <button class="filter-btn" data-filter="beauty">뷰티</button>
+                <button class="filter-btn" data-filter="home">홈&리빙</button>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" data-category="fashion">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop" alt="스마트워치">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn">빠른 보기</button>
+                            <button class="wishlist-btn"><i class="fas fa-heart"></i></button>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-vue"></i>
-                            <span>Vue.js</span>
+                        <div class="product-badge sale">-30%</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>프리미엄 스마트워치</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(128)</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-js"></i>
-                            <span>JavaScript</span>
+                        <div class="product-price">
+                            <span class="current-price">₩299,000</span>
+                            <span class="original-price">₩429,000</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt"></i>
-                            <span>CSS3</span>
-                        </div>
+                        <button class="add-to-cart-btn">장바구니 담기</button>
                     </div>
                 </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-server"></i> Backend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-node-js"></i>
-                            <span>Node.js</span>
+                <div class="product-card" data-category="electronics">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300&h=300&fit=crop" alt="무선 헤드폰">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn">빠른 보기</button>
+                            <button class="wishlist-btn"><i class="fas fa-heart"></i></button>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-python"></i>
-                            <span>Python</span>
+                        <div class="product-badge new">NEW</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>노이즈 캔슬링 헤드폰</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(89)</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>MongoDB</span>
+                        <div class="product-price">
+                            <span class="current-price">₩189,000</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fas fa-cloud"></i>
-                            <span>AWS</span>
-                        </div>
+                        <button class="add-to-cart-btn">장바구니 담기</button>
                     </div>
                 </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-tools"></i> Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-git-alt"></i>
-                            <span>Git</span>
+                <div class="product-card" data-category="beauty">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop" alt="스킨케어 세트">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn">빠른 보기</button>
+                            <button class="wishlist-btn"><i class="fas fa-heart"></i></button>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-docker"></i>
-                            <span>Docker</span>
+                        <div class="product-badge hot">HOT</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>프리미엄 스킨케어 세트</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(256)</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fas fa-code-branch"></i>
-                            <span>CI/CD</span>
+                        <div class="product-price">
+                            <span class="current-price">₩89,000</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fab fa-figma"></i>
-                            <span>Figma</span>
+                        <button class="add-to-cart-btn">장바구니 담기</button>
+                    </div>
+                </div>
+                <div class="product-card" data-category="home">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop" alt="인테리어 조명">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn">빠른 보기</button>
+                            <button class="wishlist-btn"><i class="fas fa-heart"></i></button>
                         </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>스마트 LED 조명</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(67)</span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">₩129,000</span>
+                        </div>
+                        <button class="add-to-cart-btn">장바구니 담기</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects 섹션 -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">최근 작업한 프로젝트들</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>E-Commerce Platform</h3>
-                        <p>React와 Node.js로 구축한 현대적인 쇼핑몰 플랫폼</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Task Management App</h3>
-                        <p>팀 협업을 위한 직관적인 태스크 관리 애플리케이션</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">PWA</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>AI Dashboard</h3>
-                        <p>데이터 시각화와 AI 분석을 위한 대시보드</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">D3.js</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- 장바구니 사이드바 -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>장바구니</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-    </section>
+        <div class="cart-items" id="cartItems">
+            <!-- 장바구니 아이템들이 여기에 동적으로 추가됩니다 -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>총 금액: <span id="cartTotal">₩0</span></span>
+            </div>
+            <button class="checkout-btn">주문하기</button>
+        </div>
+    </div>
 
-    <!-- Contact 섹션 -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Let's Work Together</h2>
-                <p class="section-subtitle">새로운 프로젝트를 함께 시작해보세요</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>이메일</h4>
-                            <p>hello@portfolio.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>전화</h4>
-                            <p>+82 10-1234-5678</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>위치</h4>
-                            <p>서울, 대한민국</p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" required>
-                        <label for="name">이름</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required>
-                        <label for="email">이메일</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" required>
-                        <label for="subject">제목</label>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                        <label for="message">메시지</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">
-                        <i class="fas fa-paper-plane"></i>
-                        메시지 보내기
-                    </button>
-                </form>
+    <!-- 위시리스트 사이드바 -->
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+        <div class="wishlist-header">
+            <h3>위시리스트</h3>
+            <button class="close-wishlist" id="closeWishlist">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="wishlist-items" id="wishlistItems">
+            <!-- 위시리스트 아이템들이 여기에 동적으로 추가됩니다 -->
+        </div>
+    </div>
+
+    <!-- 퀵뷰 모달 -->
+    <div class="modal-overlay" id="quickViewModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeQuickView">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="quickViewContent">
+                <!-- 퀵뷰 내용이 여기에 동적으로 추가됩니다 -->
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-text">
-                    <p>&copy; 2024 Portfolio. Made with ❤️ by Creative Developer</p>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-text">TrendMall</span>
+                        <div class="logo-dot"></div>
+                    </div>
+                    <p>2024년 최신 트렌드를 선도하는 프리미엄 쇼핑몰</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
+                <div class="footer-section">
+                    <h4>쇼핑 정보</h4>
+                    <ul>
+                        <li><a href="#">신상품</a></li>
+                        <li><a href="#">베스트</a></li>
+                        <li><a href="#">세일</a></li>
+                        <li><a href="#">브랜드</a></li>
+                    </ul>
                 </div>
+                <div class="footer-section">
+                    <h4>고객 서비스</h4>
+                    <ul>
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">자주 묻는 질문</a></li>
+                        <li><a href="#">배송 정보</a></li>
+                        <li><a href="#">반품/교환</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>회사 정보</h4>
+                    <ul>
+                        <li><a href="#">회사 소개</a></li>
+                        <li><a href="#">채용 정보</a></li>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TrendMall. All rights reserved. Made with ❤️</p>
             </div>
         </div>
     </footer>
@@ -395,6 +441,9 @@
     <button class="scroll-to-top" id="scrollToTop">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- 오버레이 -->
+    <div class="overlay" id="overlay"></div>
 
     <script src="script.js"></script>
 </body>
