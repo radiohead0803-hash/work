@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b6b">
+    <title>FamHub 로그인 - 우리 가족만의 특별한 공간 🔐</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff6b6b 0%, #fd79a8 50%, #74b9ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            margin-bottom: 2rem;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-heart {
+            font-size: 2rem;
+            animation: heartBeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            color: #2d3436;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #636e72;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #fd79a8 100%);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .error-message {
+            background: #ff7675;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .demo-credentials {
+            background: rgba(116, 185, 255, 0.1);
+            border: 1px solid rgba(116, 185, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .demo-credentials h4 {
+            color: #74b9ff;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .demo-credentials p {
+            margin: 0.3rem 0;
+            font-size: 0.85rem;
+            color: #636e72;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: floatHeart 8s linear infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-heart:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .floating-heart:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .floating-heart:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .floating-heart:nth-child(5) { left: 50%; animation-delay: 1s; }
+        .floating-heart:nth-child(6) { left: 60%; animation-delay: 3s; }
+        .floating-heart:nth-child(7) { left: 70%; animation-delay: 5s; }
+        .floating-heart:nth-child(8) { left: 80%; animation-delay: 7s; }
+        .floating-heart:nth-child(9) { left: 90%; animation-delay: 1.5s; }
+
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts">
+        <div class="floating-heart">💖</div>
+        <div class="floating-heart">💝</div>
+        <div class="floating-heart">💗</div>
+        <div class="floating-heart">💕</div>
+        <div class="floating-heart">💞</div>
+        <div class="floating-heart">💓</div>
+        <div class="floating-heart">💘</div>
+        <div class="floating-heart">💙</div>
+        <div class="floating-heart">💚</div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-logo">
+            <div class="logo-text">FamHub</div>
+            <div class="logo-heart">❤️</div>
+        </div>
+        
+        <h2 class="login-title">가족 공간에 오신 것을 환영합니다</h2>
+        <p class="login-subtitle">로그인하여 우리 가족의 소중한 추억을 관리하세요</p>
+        
+        <div class="error-message" id="errorMessage">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> 로그인
+            </button>
+        </form>
+        
+        <div class="demo-credentials">
+            <h4><i class="fas fa-info-circle"></i> 데모 계정 정보</h4>
+            <p><strong>관리자:</strong> admin / family2024</p>
+            <p><strong>엄마:</strong> mom / love123</p>
+            <p><strong>아빠:</strong> dad / care456</p>
+        </div>
+    </div>
+
+    <script>
+        // 로그인 폼 처리
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // 데모 계정 정보
+            const accounts = {
+                'admin': 'family2024',
+                'mom': 'love123',
+                'dad': 'care456'
+            };
+            
+            // 로그인 검증
+            if (accounts[username] && accounts[username] === password) {
+                // 로그인 성공
+                localStorage.setItem('famhub_user', username);
+                localStorage.setItem('famhub_login_time', new Date().getTime());
+                
+                // 성공 메시지 표시
+                errorMessage.style.background = '#00b894';
+                errorMessage.textContent = '로그인 성공! 잠시 후 메인 페이지로 이동합니다...';
+                errorMessage.style.display = 'block';
+                
+                // 2초 후 메인 페이지로 이동
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            } else {
+                // 로그인 실패
+                errorMessage.style.background = '#ff7675';
+                errorMessage.textContent = '아이디 또는 비밀번호가 올바르지 않습니다.';
+                errorMessage.style.display = 'block';
+                
+                // 입력 필드 흔들기 효과
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        input.style.animation = '';
+                    }, 500);
+                });
+            }
+        });
+        
+        // 흔들기 애니메이션 CSS 추가
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 이미 로그인된 경우 메인 페이지로 리다이렉트
+        if (localStorage.getItem('famhub_user')) {
+            const loginTime = localStorage.getItem('famhub_login_time');
+            const currentTime = new Date().getTime();
+            
+            // 24시간 이내 로그인 유지
+            if (currentTime - loginTime < 24 * 60 * 60 * 1000) {
+                window.location.href = 'index.html';
+            } else {
+                // 세션 만료
+                localStorage.removeItem('famhub_user');
+                localStorage.removeItem('famhub_login_time');
+            }
+        }
+    </script>
+</body>
+</html>
