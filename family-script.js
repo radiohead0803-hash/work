@@ -78,7 +78,16 @@ const famhubState = {
     ],
     currentMonth: new Date().getMonth(),
     currentYear: new Date().getFullYear(),
-    darkMode: localStorage.getItem('famhub_darkMode') === 'true'
+    darkMode: localStorage.getItem('famhub_darkMode') === 'true',
+    profilePhotos: JSON.parse(localStorage.getItem('famhub_profiles')) || {
+        mom: 'https://images.unsplash.com/photo-1494790108755-2616c2c8c6e2?w=300&h=300&fit=crop',
+        dad: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop',
+        daughter: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop',
+        son: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=300&fit=crop',
+        youngest: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&h=300&fit=crop'
+    },
+    currentEditPhoto: null,
+    originalImageData: null
 };
 
 // Authentication Check
@@ -110,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initDarkMode();
     initEventManagement();
     initPhotoGallery();
+    initPhotoEditor();
+    initProfilePhotoChange();
     initCalendar();
     initModals();
     initScrollEffects();
@@ -118,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update UI
     updateEventCount();
     updatePhotoCount();
+    updateProfilePhotos();
     
     console.log('💖 FamHub loaded successfully!');
 });
@@ -361,6 +373,11 @@ function initPhotoGallery() {
             viewPhoto(photoItem);
         }
         
+        if (e.target.classList.contains('photo-edit')) {
+            const photoItem = e.target.closest('.photo-item');
+            editPhoto(photoItem);
+        }
+        
         if (e.target.classList.contains('photo-delete')) {
             const photoItem = e.target.closest('.photo-item');
             deletePhoto(photoItem);
@@ -422,6 +439,9 @@ function renderPhotos() {
                     <button class="photo-view" data-id="${photo.id}">
                         <i class="fas fa-eye"></i>
                     </button>
+                    <button class="photo-edit" data-id="${photo.id}">
+                        <i class="fas fa-edit"></i>
+                    </button>
                     <button class="photo-delete" data-id="${photo.id}">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -463,6 +483,17 @@ function viewPhoto(photoItem) {
     }
 }
 
+function editPhoto(photoItem) {
+    const photoId = parseInt(photoItem.querySelector('.photo-edit').dataset.id);
+    const photo = famhubState.photos.find(p => p.id === photoId);
+    
+    if (photo) {
+        famhubState.currentEditPhoto = photo;
+        loadImageToCanvas(photo.url);
+        openModal('photoEditModal');
+    }
+}
+
 function deletePhoto(photoItem) {
     const photoId = parseInt(photoItem.querySelector('.photo-delete').dataset.id);
     
@@ -474,6 +505,315 @@ function deletePhoto(photoItem) {
         updatePhotoCount();
         showNotification('사진이 삭제되었습니다.', 'info');
     }
+}
+
+// Photo Editor Functions
+function initPhotoEditor() {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Editor controls
+    document.getElementById('rotateLeft').addEventListener('click', () => rotateImage(-90));
+    document.getElementById('rotateRight').addEventListener('click', () => rotateImage(90));
+    document.getElementById('flipHorizontal').addEventListener('click', () => flipImage('horizontal'));
+    document.getElementById('flipVertical').addEventListener('click', () => flipImage('vertical'));
+    
+    // Sliders
+    document.getElementById('brightnessSlider').addEventListener('input', updateImageFilters);
+    document.getElementById('contrastSlider').addEventListener('input', updateImageFilters);
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            applyFilter(e.target.dataset.filter);
+        });
+    });
+    
+    // Editor actions
+    document.getElementById('resetEdit').addEventListener('click', resetImageEdit);
+    document.getElementById('cancelEdit').addEventListener('click', () => closeModal('photoEditModal'));
+    document.getElementById('saveEdit').addEventListener('click', saveEditedPhoto);
+    
+    // Close modal
+    document.getElementById('closePhotoEditor').addEventListener('click', () => closeModal('photoEditModal'));
+}
+
+function loadImageToCanvas(imageUrl) {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+        canvas.width = Math.min(img.width, 600);
+        canvas.height = (img.height * canvas.width) / img.width;
+        
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        famhubState.originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    };
+    
+    img.src = imageUrl;
+}
+
+function rotateImage(degrees) {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    
+    // Create temporary canvas for rotation
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    if (degrees === 90 || degrees === -90) {
+        tempCanvas.width = canvas.height;
+        tempCanvas.height = canvas.width;
+    } else {
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+    }
+    
+    tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
+    tempCtx.rotate((degrees * Math.PI) / 180);
+    tempCtx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+    
+    canvas.width = tempCanvas.width;
+    canvas.height = tempCanvas.height;
+    ctx.drawImage(tempCanvas, 0, 0);
+}
+
+function flipImage(direction) {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    
+    ctx.save();
+    
+    if (direction === 'horizontal') {
+        ctx.scale(-1, 1);
+        ctx.drawImage(canvas, -canvas.width, 0);
+    } else {
+        ctx.scale(1, -1);
+        ctx.drawImage(canvas, 0, -canvas.height);
+    }
+    
+    ctx.restore();
+}
+
+function updateImageFilters() {
+    const brightness = document.getElementById('brightnessSlider').value;
+    const contrast = document.getElementById('contrastSlider').value;
+    
+    document.getElementById('brightnessValue').textContent = brightness;
+    document.getElementById('contrastValue').textContent = contrast;
+    
+    applyImageAdjustments(brightness, contrast);
+}
+
+function applyImageAdjustments(brightness, contrast) {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (famhubState.originalImageData) {
+        ctx.putImageData(famhubState.originalImageData, 0, 0);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        const brightnessFactor = parseInt(brightness);
+        const contrastFactor = (parseInt(contrast) + 100) / 100;
+        
+        for (let i = 0; i < data.length; i += 4) {
+            // Apply brightness
+            data[i] += brightnessFactor;     // Red
+            data[i + 1] += brightnessFactor; // Green
+            data[i + 2] += brightnessFactor; // Blue
+            
+            // Apply contrast
+            data[i] = ((data[i] - 128) * contrastFactor) + 128;
+            data[i + 1] = ((data[i + 1] - 128) * contrastFactor) + 128;
+            data[i + 2] = ((data[i + 2] - 128) * contrastFactor) + 128;
+            
+            // Clamp values
+            data[i] = Math.max(0, Math.min(255, data[i]));
+            data[i + 1] = Math.max(0, Math.min(255, data[i + 1]));
+            data[i + 2] = Math.max(0, Math.min(255, data[i + 2]));
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+    }
+}
+
+function applyFilter(filterType) {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (famhubState.originalImageData) {
+        ctx.putImageData(famhubState.originalImageData, 0, 0);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        switch (filterType) {
+            case 'grayscale':
+                for (let i = 0; i < data.length; i += 4) {
+                    const gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                    data[i] = gray;
+                    data[i + 1] = gray;
+                    data[i + 2] = gray;
+                }
+                break;
+                
+            case 'sepia':
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    data[i] = Math.min(255, (r * 0.393) + (g * 0.769) + (b * 0.189));
+                    data[i + 1] = Math.min(255, (r * 0.349) + (g * 0.686) + (b * 0.168));
+                    data[i + 2] = Math.min(255, (r * 0.272) + (g * 0.534) + (b * 0.131));
+                }
+                break;
+                
+            case 'vintage':
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] * 1.2);
+                    data[i + 1] = Math.min(255, data[i + 1] * 1.1);
+                    data[i + 2] = Math.min(255, data[i + 2] * 0.8);
+                }
+                break;
+                
+            case 'warm':
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] * 1.1);
+                    data[i + 1] = Math.min(255, data[i + 1] * 1.05);
+                    data[i + 2] = Math.min(255, data[i + 2] * 0.9);
+                }
+                break;
+                
+            case 'cool':
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] * 0.9);
+                    data[i + 1] = Math.min(255, data[i + 1] * 1.05);
+                    data[i + 2] = Math.min(255, data[i + 2] * 1.1);
+                }
+                break;
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+    }
+}
+
+function resetImageEdit() {
+    const canvas = document.getElementById('editCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (famhubState.originalImageData) {
+        ctx.putImageData(famhubState.originalImageData, 0, 0);
+    }
+    
+    // Reset controls
+    document.getElementById('brightnessSlider').value = 0;
+    document.getElementById('contrastSlider').value = 0;
+    document.getElementById('brightnessValue').textContent = '0';
+    document.getElementById('contrastValue').textContent = '0';
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="none"]').classList.add('active');
+}
+
+function saveEditedPhoto() {
+    const canvas = document.getElementById('editCanvas');
+    const editedImageUrl = canvas.toDataURL('image/jpeg', 0.9);
+    
+    if (famhubState.currentEditPhoto) {
+        const photoIndex = famhubState.photos.findIndex(p => p.id === famhubState.currentEditPhoto.id);
+        if (photoIndex !== -1) {
+            famhubState.photos[photoIndex].url = editedImageUrl;
+            localStorage.setItem('famhub_photos', JSON.stringify(famhubState.photos));
+            
+            renderPhotos();
+            closeModal('photoEditModal');
+            showNotification('사진이 편집되었습니다! 🎨', 'success');
+        }
+    }
+}
+
+// Profile Photo Change Functions
+function initProfilePhotoChange() {
+    // Profile photo change buttons
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('change-photo-btn')) {
+            const member = e.target.dataset.member;
+            openProfilePhotoModal(member);
+        }
+    });
+    
+    // Profile photo form
+    const profileForm = document.getElementById('profilePhotoForm');
+    if (profileForm) {
+        profileForm.addEventListener('submit', handleProfilePhotoSubmit);
+    }
+    
+    // File preview
+    const profileFileInput = document.getElementById('profilePhotoFile');
+    if (profileFileInput) {
+        profileFileInput.addEventListener('change', previewProfilePhoto);
+    }
+    
+    // Modal controls
+    document.getElementById('closeProfileModal').addEventListener('click', () => closeModal('profilePhotoModal'));
+    document.getElementById('cancelProfile').addEventListener('click', () => closeModal('profilePhotoModal'));
+}
+
+function openProfilePhotoModal(member) {
+    famhubState.currentEditMember = member;
+    document.getElementById('profilePhotoForm').reset();
+    document.getElementById('profilePreview').innerHTML = '';
+    openModal('profilePhotoModal');
+}
+
+function previewProfilePhoto(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('profilePreview');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="미리보기">`;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function handleProfilePhotoSubmit(e) {
+    e.preventDefault();
+    
+    const fileInput = document.getElementById('profilePhotoFile');
+    
+    if (fileInput.files[0] && famhubState.currentEditMember) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            famhubState.profilePhotos[famhubState.currentEditMember] = e.target.result;
+            localStorage.setItem('famhub_profiles', JSON.stringify(famhubState.profilePhotos));
+            
+            updateProfilePhotos();
+            closeModal('profilePhotoModal');
+            showNotification('프로필 사진이 변경되었습니다! 📸', 'success');
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+
+function updateProfilePhotos() {
+    Object.keys(famhubState.profilePhotos).forEach(member => {
+        const memberElement = document.querySelector(`[data-member="${member}"] img`);
+        if (memberElement) {
+            memberElement.src = famhubState.profilePhotos[member];
+        }
+    });
 }
 
 // Calendar Management

@@ -1883,6 +1883,207 @@ section {
   right: 0.5rem;
 }
 
+/* Photo Editor Modal */
+.photo-editor {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: 1200px;
+}
+
+.photo-editor-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.editor-canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  min-height: 400px;
+}
+
+#editCanvas {
+  max-width: 100%;
+  max-height: 400px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.editor-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.control-group {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.control-group h4 {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.control-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.edit-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.slider-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.slider-control label {
+  min-width: 50px;
+  font-size: 0.9rem;
+}
+
+.slider-control input[type="range"] {
+  flex: 1;
+}
+
+.slider-control span {
+  min-width: 30px;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filter-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.crop-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.crop-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.crop-btn:hover,
+.crop-btn.active {
+  background: var(--secondary-color);
+  color: white;
+  border-color: var(--secondary-color);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Profile Photo Change */
+.change-photo-btn {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.change-photo-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+.file-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.file-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+}
+
+/* Photo Edit Button */
+.photo-edit {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-edit:hover {
+  background: var(--accent-color);
+}
+
 /* Loading Animation */
 .loading {
   display: inline-block;

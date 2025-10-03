@@ -105,6 +105,9 @@
                         <img src="https://images.unsplash.com/photo-1494790108755-2616c2c8c6e2?w=300&h=300&fit=crop" alt="엄마" loading="lazy">
                         <div class="member-overlay">
                             <div class="member-role">👩‍💼 엄마</div>
+                            <button class="change-photo-btn" data-member="mom">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="member-info">
@@ -122,6 +125,9 @@
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop" alt="아빠" loading="lazy">
                         <div class="member-overlay">
                             <div class="member-role">👨‍💼 아빠</div>
+                            <button class="change-photo-btn" data-member="dad">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="member-info">
@@ -139,6 +145,9 @@
                         <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop" alt="큰딸" loading="lazy">
                         <div class="member-overlay">
                             <div class="member-role">👧 큰딸</div>
+                            <button class="change-photo-btn" data-member="daughter">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="member-info">
@@ -156,6 +165,9 @@
                         <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=300&h=300&fit=crop" alt="큰아들" loading="lazy">
                         <div class="member-overlay">
                             <div class="member-role">👦 큰아들</div>
+                            <button class="change-photo-btn" data-member="son">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="member-info">
@@ -173,6 +185,9 @@
                         <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&h=300&fit=crop" alt="막둥이" loading="lazy">
                         <div class="member-overlay">
                             <div class="member-role">👶 막둥이</div>
+                            <button class="change-photo-btn" data-member="youngest">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="member-info">
@@ -286,6 +301,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -300,6 +316,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -314,6 +331,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -328,6 +346,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -342,6 +361,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -356,6 +376,7 @@
                         </div>
                         <div class="photo-actions">
                             <button class="photo-view"><i class="fas fa-eye"></i></button>
+                            <button class="photo-edit"><i class="fas fa-edit"></i></button>
                             <button class="photo-delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
@@ -469,6 +490,106 @@
             </button>
             <div class="photo-viewer-content" id="photoViewerContent">
                 <!-- 사진 뷰어 내용이 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 사진 편집 모달 -->
+    <div class="modal-overlay" id="photoEditModal">
+        <div class="modal-content photo-editor">
+            <button class="modal-close" id="closePhotoEditor">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h3>사진 편집</h3>
+                <div class="photo-editor-container">
+                    <div class="editor-canvas-container">
+                        <canvas id="editCanvas"></canvas>
+                    </div>
+                    <div class="editor-controls">
+                        <div class="control-group">
+                            <h4>기본 편집</h4>
+                            <div class="control-buttons">
+                                <button class="edit-btn" id="rotateLeft">
+                                    <i class="fas fa-undo"></i> 왼쪽 회전
+                                </button>
+                                <button class="edit-btn" id="rotateRight">
+                                    <i class="fas fa-redo"></i> 오른쪽 회전
+                                </button>
+                                <button class="edit-btn" id="flipHorizontal">
+                                    <i class="fas fa-arrows-alt-h"></i> 좌우 반전
+                                </button>
+                                <button class="edit-btn" id="flipVertical">
+                                    <i class="fas fa-arrows-alt-v"></i> 상하 반전
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h4>밝기 & 대비</h4>
+                            <div class="slider-control">
+                                <label for="brightnessSlider">밝기</label>
+                                <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+                                <span id="brightnessValue">0</span>
+                            </div>
+                            <div class="slider-control">
+                                <label for="contrastSlider">대비</label>
+                                <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+                                <span id="contrastValue">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h4>필터</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn" data-filter="none">원본</button>
+                                <button class="filter-btn" data-filter="grayscale">흑백</button>
+                                <button class="filter-btn" data-filter="sepia">세피아</button>
+                                <button class="filter-btn" data-filter="vintage">빈티지</button>
+                                <button class="filter-btn" data-filter="warm">따뜻함</button>
+                                <button class="filter-btn" data-filter="cool">차가움</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h4>크롭</h4>
+                            <div class="crop-buttons">
+                                <button class="crop-btn" data-ratio="1:1">정사각형</button>
+                                <button class="crop-btn" data-ratio="4:3">4:3</button>
+                                <button class="crop-btn" data-ratio="16:9">16:9</button>
+                                <button class="crop-btn" data-ratio="free">자유</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-actions">
+                    <button type="button" class="btn btn-secondary" id="resetEdit">초기화</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">취소</button>
+                    <button type="button" class="btn btn-primary" id="saveEdit">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 프로필 사진 변경 모달 -->
+    <div class="modal-overlay" id="profilePhotoModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeProfileModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h3>프로필 사진 변경</h3>
+                <form id="profilePhotoForm">
+                    <div class="form-group">
+                        <label for="profilePhotoFile">새 프로필 사진</label>
+                        <input type="file" id="profilePhotoFile" accept="image/*" required>
+                        <div class="file-preview" id="profilePreview"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelProfile">취소</button>
+                        <button type="submit" class="btn btn-primary">변경</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
